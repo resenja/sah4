@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>const client = supabase.createClient('https://qrpjxxnyavsvmdbypowt.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFycGp4eG55YXZzdm1kYnlwb3d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzI1ODY5NjAsImV4cCI6MTk4ODE2Mjk2MH0.XAG8M4YLwVpGdA5H0qLa_SgFuUNuR9rldwe94DuPf3o');</script>
+</head>
+<body>
+    <div id="game">
+        <div id="board">
+            <div id="rank1"></div>
+            <div id="rank2"></div>
+            <div id="rank3"></div>
+            <div id="rank4"></div>
+            <div id="rank5"></div>
+            <div id="rank6"></div>
+            <div id="rank7"></div>
+            <div id="rank8"></div>
+            <div id="rank9"></div>
+            <div id="rank10"></div>
+            <div id="rank11"></div>
+            <div id="rank12"></div>
+            <div id="rank13"></div>
+            <div id="rank14"></div>
+        </div>
+        <div class="cover-wrapper" id="create-cover" style="display: block;">
+            <div class="cover">
+                <button id="join-game" onclick="joinGame()">pridruži se partiji</button>
+            </div>
+        </div>
+        <div class="cover-wrapper" id="wait-cover" style="display: none;">
+            <div class="cover" style="width:45%;">
+                <input value="" readonly id="gameID">
+                <span id="player-number">1</span>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

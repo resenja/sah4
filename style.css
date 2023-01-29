@@ -1,0 +1,118 @@
+:root{
+    --square-size: 1px;
+}
+html{
+    height: 100%;
+}
+body{
+    background-color: gray;
+    min-height:100%;
+    overflow:hidden;
+    margin:0;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.square{
+    width:var(--square-size);
+    height:var(--square-size);
+}
+.noselect{
+    -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
+}
+.white{
+    background-color:rgb(218,218,218);
+}
+
+.black{
+    background-color:rgb(173,173,173);
+}
+.blank{
+    background-color: transparent;
+}
+#board{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+img {
+    width:var(--square-size);
+    height:auto;
+}
+div:not(#game) .red, #board.red-player{
+    transform: rotate(0deg);
+}
+div:not(#game) .blue{
+    transform: rotate(90deg);
+}
+#board.blue-player{
+    transform: rotate(270deg);
+}
+div:not(#game) .yellow , #board.yellow-player{
+    transform: rotate(180deg);
+}
+div:not(#game) .green{
+    transform: rotate(270deg);
+}
+#board.green-player{
+    transform: rotate(90deg);
+}
+.piece{
+    position:relative;
+    z-index: 1;
+}
+.piece.drag{
+    position:absolute;
+    z-index:1000;
+}
+.legal-move{
+    background-color:blue;
+}
+.piece.gray{
+    filter: grayscale(100%);
+}
+.cover-wrapper{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+}
+.cover{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+#create-game, #join-game{
+    width:8rem;
+}
+#game-name{
+    width:4ch;
+    height: 1rem;
+}
+.input-error{
+    outline: 1px solid red;
+}
+.input-accept{
+    outline: 1px solid green;
+}
+#player-number{
+    position:absolute;
+    top:-100px;
+    left:calc(50% - 2.5ch);
+    padding:2ch;
+    border-radius: 10px;
+    background-color: lightskyblue;
+    font-weight: bold;
+}
+#gameID{
+    width:100%;
+    height: 2ch;
+}
