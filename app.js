@@ -868,7 +868,9 @@ async function dragEnd(event){
             else if(color === "blue")castleParams = fullPosition.split(" ")[2];
             else if(color === "yellow")castleParams = fullPosition.split(" ")[3];
             else if(color === "green")castleParams = fullPosition.split(" ")[4];
-            fullPosition = fullPosition.replace(castleParams, updatePositionParams(castleParams));
+            fullPosition = fullPosition.replace(castleParams, updatePositionParams(castleParams));           
+            checkmate();
+            resetLegalMoves();
 
 
             if(checkmated.length<3)nextTurn();
@@ -876,9 +878,6 @@ async function dragEnd(event){
                 .from('chess_four')
                 .update({ board: fullPosition, turn: turn})
                 .eq('game_name', gameName)
-
-                checkmate();
-                resetLegalMoves();
         }
     }
 }
