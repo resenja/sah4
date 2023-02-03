@@ -797,7 +797,7 @@ let legalMoves = [];
 let checkmated = [];
 
 let created = false;
-let turn = "red";
+let turn = "";
 let players = 0;
 let gameName = "";
 let color = "red";
@@ -868,16 +868,19 @@ async function dragEnd(event){
             else if(color === "blue")castleParams = fullPosition.split(" ")[2];
             else if(color === "yellow")castleParams = fullPosition.split(" ")[3];
             else if(color === "green")castleParams = fullPosition.split(" ")[4];
-            fullPosition = fullPosition.replace(castleParams, updatePositionParams(castleParams));           
+            
+            if(fullPosition.includes("-"))fullPosition = fullPosition.replace(castleParams, updatePositionParams(castleParams));
+
+
             checkmate();
             resetLegalMoves();
-
-
             if(checkmated.length<3)nextTurn();
-            const { data, error } = await client
-                .from('chess_four')
-                .update({ board: fullPosition, turn: turn})
-                .eq('game_name', gameName)
+            if(new URLSearchParams(document.location.search).get("id")){
+                const { data, error } = await client
+                    .from('chess_four')
+                    .update({ board: fullPosition, turn: turn})
+                    .eq('game_name', gameName)
+            }
         }
     }
 }
@@ -916,6 +919,12 @@ function updatePositionParams(params){
 }
 
 
+function setBodyColor(){
+    if(turn === "red") return "#bf3b43";
+    else if(turn === "blue") return "#4185bf";
+    else if(turn === "yellow") return "#c09526";
+    else return "#4e9161";
+}
   function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -962,10 +971,11 @@ function updatePositionParams(params){
             created = data[0].started;
             if(created){
                 turn = data[0].turn;
+                document.querySelector("body").style.backgroundColor = setBodyColor();
                 fullPosition = data[0].board;
                 setPosition(fullPosition.split(" ")[0]);
                 checkmate();
-                resetLegalMoves()
+                resetLegalMoves();
             }
             else document.querySelector("#wait-cover").style.display = "block";
         }
@@ -997,7 +1007,7 @@ function updatePositionParams(params){
             console.log('New users have joined: ', newPresences)
             players++;
             document.querySelector("#player-number").innerHTML = players;
-            if(players === 4){
+            if((JSON.stringify(channel.presenceState()).match(/presence/g) || []).length === 4){
                 document.querySelector("#wait-cover").style.display = "none";
                 created = true;
                 const { error } = await client
@@ -1030,7 +1040,6 @@ function updatePositionParams(params){
     }
   }
   async function joinGame(){
-
     let url = new URL(document.URL);
     let id = uuidv4();
     url.searchParams.set("id",id);
@@ -1061,6 +1070,7 @@ function updatePositionParams(params){
         created = payload.new.started;
         if(created){
             turn = payload.new.turn;
+            document.querySelector("body").style.backgroundColor = setBodyColor();
             fullPosition = payload.new.board;
             setPosition(fullPosition.split(" ")[0]);
             checkmate();

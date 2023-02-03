@@ -5,7 +5,6 @@ html{
     height: 100%;
 }
 body{
-    background-color: gray;
     min-height:100%;
     overflow:hidden;
     margin:0;
@@ -70,8 +69,15 @@ div:not(#game) .green{
     position:absolute;
     z-index:1000;
 }
-.legal-move{
-    background-color:blue;
+.legal-move:before{
+    content: "";
+    position: absolute;
+    width: calc(var(--square-size) / 2);
+    height: calc(var(--square-size) / 2);
+    background-color: rgb(0 0 0 / 50%);
+    border-radius: 100%;
+    transform: translate(50%,50%);
+    z-index: 10;
 }
 .piece.gray{
     filter: grayscale(100%);
