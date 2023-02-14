@@ -399,9 +399,8 @@ function findMoves(pieceColor){
     return moves;
 }
 function moveIsLegal(pieceColor){
-    let king;
+    let king = document.querySelector(".k." + pieceColor);
     let moves = [];
-    king = document.querySelector(".k." + pieceColor);
     moves = findMoves(pieceColor);
 
     return !moves.includes(king.parentElement);
@@ -432,34 +431,25 @@ function movePiece(){
         else moves.splice(i,1);
         previousParent.append(piece);
     }
-    if(!movedKing && (!movedRookL || !movedRookR) && piece.classList.contains("k")){
-        let castleMoves = [];
-        let shortCastle = false;
-        let longCastle = false;
+
+    let castleMoves = findMoves(pieceColor);
+    if(!movedKing && (!movedRookL || !movedRookR) && piece.classList.contains("k") && !castleMoves.includes(piece.parentElement)){
         if(pieceColor === "red"){
             if(!movedRookL){
                 let left1 = document.querySelector("#e1");
                 let left2 = document.querySelector("#f1");
                 let left3 = document.querySelector("#g1");
-                if(!left1.firstChild && !left2.firstChild && !left3.firstChild){
-                    longCastle = true;
-                    castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
-                        left2.classList.add("legal-move");
-                        moves.push(left2);
-                    }
+                if(!left1.firstChild && !left2.firstChild && !left3.firstChild && !castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
+                    left2.classList.add("legal-move");
+                    moves.push(left2);
                 }
             }
             if(!movedRookR){
                 let right1 = document.querySelector("#i1");
                 let right2 = document.querySelector("#j1");
-                if(!right1.firstChild && !right2.firstChild){
-                    shortCastle = true;
-                    if(!longCastle)castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(right1) && !castleMoves.includes(right2)){
-                        right2.classList.add("legal-move");
-                        moves.push(right2);
-                    }
+                if(!right1.firstChild && !right2.firstChild && !castleMoves.includes(right1) && !castleMoves.includes(right2)){
+                    right2.classList.add("legal-move");
+                    moves.push(right2);
                 }
             }
         }
@@ -469,25 +459,17 @@ function movePiece(){
                 let left1 = document.querySelector("#a10");
                 let left2 = document.querySelector("#a9");
                 let left3 = document.querySelector("#a8");
-                if(!left1.firstChild && !left2.firstChild && !left3.firstChild){
-                    longCastle = true;
-                    castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
-                        left2.classList.add("legal-move");
-                        moves.push(left2);
-                    }
+                if(!left1.firstChild && !left2.firstChild && !left3.firstChild && !castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
+                    left2.classList.add("legal-move");
+                    moves.push(left2);
                 }
             }
             if(!movedRookR){
                 let right1 = document.querySelector("#a6");
                 let right2 = document.querySelector("#a5");
-                if(!right1.firstChild && !right2.firstChild){
-                    shortCastle = true;
-                    if(!longCastle)castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(right1) && !castleMoves.includes(right2)){
-                        right2.classList.add("legal-move");
-                        moves.push(right2);
-                    }
+                if(!right1.firstChild && !right2.firstChild && !castleMoves.includes(right1) && !castleMoves.includes(right2)){
+                    right2.classList.add("legal-move");
+                    moves.push(right2);
                 }
             }
         }
@@ -497,24 +479,17 @@ function movePiece(){
                 let left1 = document.querySelector("#h14");
                 let left2 = document.querySelector("#i14");
                 let left3 = document.querySelector("#j14");
-                if(!left1.firstChild && !left2.firstChild && !left3.firstChild){
-                    longCastle = true;
-                    if(!castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
-                        left2.classList.add("legal-move");
-                        moves.push(left2);
-                    }
+                if(!left1.firstChild && !left2.firstChild && !left3.firstChild && !castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
+                    left2.classList.add("legal-move");
+                    moves.push(left2);
                 }
             }
             if(!movedRookR){
                 let right1 = document.querySelector("#f14");
                 let right2 = document.querySelector("#e14");
-                if(!right1.firstChild && !right2.firstChild){
-                    shortCastle = true;
-                    if(!longCastle)castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(right1) && !castleMoves.includes(right2)){
-                        right2.classList.add("legal-move");
-                        moves.push(right2);
-                    }
+                if(!right1.firstChild && !right2.firstChild && !castleMoves.includes(right1) && !castleMoves.includes(right2)){
+                    right2.classList.add("legal-move");
+                    moves.push(right2);
                 }
             }
         }
@@ -527,7 +502,7 @@ function movePiece(){
                 if(!left1.firstChild && !left2.firstChild && !left3.firstChild){
                     longCastle = true;
                     castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
+                    if(!left1.firstChild && !left2.firstChild && !left3.firstChild && !castleMoves.includes(left1) && !castleMoves.includes(left2) && !castleMoves.includes(left3)){
                         left2.classList.add("legal-move");
                         moves.push(left2);
                     }
@@ -536,13 +511,9 @@ function movePiece(){
             if(!movedRookR){
                 let right1 = document.querySelector("#n9");
                 let right2 = document.querySelector("#n10");
-                if(!right1.firstChild && !right2.firstChild){
-                    shortCastle = true;
-                    if(!longCastle)castleMoves = findMoves(pieceColor);
-                    if(!castleMoves.includes(right1) && !castleMoves.includes(right2)){
-                        right2.classList.add("legal-move");
-                        moves.push(right2);
-                    }
+                if(!right1.firstChild && !right2.firstChild && !castleMoves.includes(right1) && !castleMoves.includes(right2)){
+                    right2.classList.add("legal-move");
+                    moves.push(right2);
                 }
             }
         }
@@ -573,49 +544,6 @@ function containsLegalMoves(){
     if(legalMoves.length === 0 ) return false;
     else return true;
 }
-function castles(){
-    if(piece.classList.contains("red")){
-        if(piece.parentElement.id === "f1"){
-            document.querySelector("#g1").append(document.querySelector("#d1").firstChild);
-            movedRookL = true;
-        }
-        else if(piece.parentElement.id === "j1"){
-            document.querySelector("#i1").append(document.querySelector("#k1").firstChild);
-            movedRookR = true;
-        }
-    }
-    else if(piece.classList.contains("blue")){
-        if(piece.parentElement.id === "a9"){
-            document.querySelector("#a8").append(document.querySelector("#a11").firstChild);
-            movedRookL = true;
-        }
-        else if(piece.parentElement.id === "a5"){
-            document.querySelector("#a6").append(document.querySelector("#a4").firstChild);
-            movedRookR = true;
-        }
-    }
-    else if(piece.classList.contains("yellow")){
-        if(piece.parentElement.id === "i14"){
-            document.querySelector("#h14").append(document.querySelector("#k14").firstChild);
-            movedRookL = true;
-        }
-        else if(piece.parentElement.id === "e14"){
-            document.querySelector("#f14").append(document.querySelector("#d14").firstChild);
-            movedRookR = true;
-        }
-    }
-    else if(piece.classList.contains("green")){
-        if(piece.parentElement.id === "n6"){
-            document.querySelector("#n7").append(document.querySelector("#n4").firstChild);
-            movedRookL = true;
-        }
-        else if(piece.parentElement.id === "n10"){
-            document.querySelector("#n9").append(document.querySelector("#n11").firstChild);
-            movedRookR = true;
-        }
-        movedKing = true;
-    }
-}
 function changeRookStatus(){
     if(piece.classList.contains("red")){
         if(snapElement.id === "d1")movedRookL = true;
@@ -635,8 +563,9 @@ function changeRookStatus(){
     }
 }
 
-function checkmate(){
-    if(!checkmated.includes("red")){
+function checkmate(nonGrayColors){
+    let checkmated = [];
+    if(nonGrayColors.includes("R")){
         let red = document.querySelectorAll(".red");
         let legal = false;
         for(let i =0;i<red.length;i++){
@@ -647,14 +576,14 @@ function checkmate(){
             }
         }
         if(!legal){
-            for(let i =0;i<red.length;i++){
+            for(let i = 0;i<red.length;i++){
                 red[i].classList.add("gray");
             }
             checkmated.push("red");
         }
     }
 
-    if(!checkmated.includes("blue")){
+    if(nonGrayColors.includes("B")){
         let blue = document.querySelectorAll(".blue");
         let legal = false;
         for(let i =0;i<blue.length;i++){
@@ -672,7 +601,7 @@ function checkmate(){
         }
     }
 
-    if(!checkmated.includes("yellow")){
+    if(nonGrayColors.includes("Y")){
         let yellow = document.querySelectorAll(".yellow");
         let legal = false;
         for(let i =0;i<yellow.length;i++){
@@ -690,7 +619,7 @@ function checkmate(){
         }
     }
 
-    if(!checkmated.includes("green")){
+    if(nonGrayColors.includes("G")){
         let green = document.querySelectorAll(".green");
         let legal = false;
         for(let i =0;i<green.length;i++){
@@ -707,6 +636,7 @@ function checkmate(){
             checkmated.push("green");
         }
     }
+    return checkmated;
 }
 function promote(){
     if(piece.classList.contains("red")){
@@ -766,7 +696,7 @@ function getFullPosition(){
     gameParams[0] = getPosition();
     fullPosition = gameParams.join(" ");
 }
-function setPosition(position){
+function setPosition(position, nonGrayColors){
     let positionIndex = 0;
     let squares = document.querySelectorAll(".square");
 
@@ -780,7 +710,9 @@ function setPosition(position){
             else if(position[positionIndex] === "G")pieceColor="green";
 
             positionIndex++;
-            squares[i].append(createPiece(position[positionIndex],pieceColor));
+            let newPiece = createPiece(position[positionIndex],pieceColor);
+            if(!nonGrayColors.includes(position[positionIndex - 1]))newPiece.classList.add("gray")
+            squares[i].append(newPiece);
         }
         positionIndex++;
     }
@@ -794,16 +726,14 @@ let movedKing = false;
 let movedRookL = false;
 let movedRookR = false;
 let legalMoves = [];
-let checkmated = [];
 
 let created = false;
 let turn = "";
 let players = 0;
-let gameName = "";
 let color = "red";
 let score = 0;
 let time = 60;
-let channel;
+
 let fullPosition="";
 
 function init(){
@@ -849,8 +779,9 @@ async function dragEnd(event){
                     elementsUnder[i].firstChild.remove();
                 }
                 elementsUnder[i].append(piece);
-                if(!movedKing && piece.classList.contains("k"))castles();
-                if(!movedKing && (!movedRookL || !movedRookR) && piece.classList.contains("r"))changeRookStatus();
+                if(piece.classList.contains("k"))movedKing = true;
+                else if(piece.classList.contains("r"))changeRookStatus();
+                
                 if(piece.classList.contains("p"))promote();
                 moved = true;
                 break;
@@ -871,35 +802,47 @@ async function dragEnd(event){
             
             if(fullPosition.includes("-"))fullPosition = fullPosition.replace(castleParams, updatePositionParams(castleParams));
 
-
-            checkmate();
+            let checkmated = checkmate(fullPosition.split(" ")[5]);
             resetLegalMoves();
-            if(checkmated.length<3)nextTurn();
-            if(new URLSearchParams(document.location.search).get("id")){
+
+            
+            if(checkmated.length<3){
+                let checkmateParams = fullPosition.split(" ")[5];
+                if(checkmated.includes("red"))checkmateParams = checkmateParams.replace("R","");
+                if(checkmated.includes("blue"))checkmateParams = checkmateParams.replace("B","");
+                if(checkmated.includes("yellow"))checkmateParams = checkmateParams.replace("Y","");
+                if(checkmated.includes("green"))checkmateParams = checkmateParams.replace("G","");
+            
+                if(fullPosition.includes("-"))fullPosition = fullPosition.replace(fullPosition.split(" ")[5], checkmateParams);
+
+                nextTurn(checkmateParams);
+            }
+            let id = new URLSearchParams(document.location.search).get("id");
+            if(id){
                 const { data, error } = await client
                     .from('chess_four')
                     .update({ board: fullPosition, turn: turn})
-                    .eq('game_name', gameName)
+                    .eq('game_name', id)
             }
         }
     }
 }
-function nextTurn(){
+function nextTurn(checkmateParams){
     if(turn === "red"){
         turn = "blue";
-        if(checkmated.includes("blue"))nextTurn();
+        if(!checkmateParams.includes("B"))nextTurn(checkmateParams);
     }
     else if(turn === "blue"){
         turn = "yellow";
-        if(checkmated.includes("yellow"))nextTurn();
+        if(!checkmateParams.includes("Y"))nextTurn(checkmateParams);
     }
     else if(turn === "yellow"){
         turn = "green";
-        if(checkmated.includes("green"))nextTurn();
+        if(!checkmateParams.includes("G"))nextTurn(checkmateParams);
     }
     else if(turn === "green"){
         turn = "red";
-        if(checkmated.includes("red"))nextTurn();
+        if(!checkmateParams.includes("R"))nextTurn(checkmateParams);
     }
 }
 
@@ -914,17 +857,16 @@ function updatePositionParams(params){
         else castleParams += "0";
         newParams[0] = castleParams;
     }
-    newParams[1] = score;
+    newParams[1] = String(score);
     return newParams.join("-");
 }
 
-
-function setBodyColor(){
-    if(turn === "red") return "#bf3b43";
-    else if(turn === "blue") return "#4185bf";
-    else if(turn === "yellow") return "#c09526";
-    else return "#4e9161";
+function setActiveTimer(){
+    let timers = document.querySelectorAll(".player-info");
+    for(let i = 0;i<timers.length;i++)timers[i].classList.remove("active");
+    document.querySelector("#" + turn + "-stats").classList.add("active");
 }
+
   function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -955,9 +897,8 @@ function setBodyColor(){
   }
   async function connect(){
     let search = new URLSearchParams(document.location.search);
-    let id = search.get("id")
+    let id = search.get("id");
     if(id){
-        gameName = id;
         document.querySelector("#create-cover").style.display = "none";
         let inviteField = document.querySelector("#gameID");
         inviteField.value = document.URL;
@@ -967,24 +908,15 @@ function setBodyColor(){
             const { data, error } = await client
                 .from('chess_four')
                 .select('board, turn, started')
-                .eq('game_name', gameName)
-            created = data[0].started;
-            if(created){
-                turn = data[0].turn;
-                document.querySelector("body").style.backgroundColor = setBodyColor();
-                fullPosition = data[0].board;
-                setPosition(fullPosition.split(" ")[0]);
-                checkmate();
-                resetLegalMoves();
-            }
-            else document.querySelector("#wait-cover").style.display = "block";
+                .eq('game_name', id)
+            onUpdateAndReload(data[0]);
         }
         else {
             document.querySelector("#wait-cover").style.display = "block";
             const { data, error } = await client
             .from('chess_four')
             .select('board, available_colors')
-            .eq('game_name', gameName)
+            .eq('game_name', id)
             if(data.length != 0 && data[0].available_colors != ""){
                 fullPosition = data[0].board;
                 color = data[0].available_colors.split(" ")[0];
@@ -993,11 +925,12 @@ function setBodyColor(){
                 const { error } = await client
                 .from('chess_four')
                 .update({ available_colors: availableColors })
-                .eq('game_name', gameName)
+                .eq('game_name', id)
             }
         }
-        document.querySelector("#board").classList.add(color + "-player");
-        channel = client.channel(id, {
+        document.querySelector("#board").className = color + "-player";
+        document.querySelector("#game-info").className = color + "-player";
+        let channel = client.channel(id, {
             config: {
               presence: {
               },
@@ -1013,7 +946,7 @@ function setBodyColor(){
                 const { error } = await client
                 .from('chess_four')
                 .update({ started: true })
-                .eq('game_name', gameName)
+                .eq('game_name', id)
             }
           })
           
@@ -1025,7 +958,7 @@ function setBodyColor(){
                 const { error } = await client
                 .from('chess_four')
                 .delete()
-                .eq('game_name', gameName)
+                .eq('game_name', new URLSearchParams(document.location.search).get("id"))
                 let url = new URL(document.URL);
                 location.href = url.pathname;
             }
@@ -1055,6 +988,34 @@ function setBodyColor(){
     ])
     location.href = url;
   }
+  function setScores(){
+    let newScores = fullPosition.split(" ");
+    let scores = document.querySelectorAll(".score-div");
+    for(let i = 0;i<scores.length;i++){
+        scores[i].innerHTML = newScores[i + 1].split("-")[1];
+    }
+  }
+
+  async function onUpdateAndReload(data){
+    if(data.started){
+        turn = data.turn;
+        setActiveTimer();
+        fullPosition = data.board;
+        setPosition(fullPosition.split(" ")[0], fullPosition.split(" ")[5]);
+        setScores();
+        let castleParams;
+        if(color === "red")castleParams = fullPosition.split(" ")[1];
+        else if(color === "blue")castleParams = fullPosition.split(" ")[2];
+        else if(color === "yellow")castleParams = fullPosition.split(" ")[3];
+        else if(color === "green")castleParams = fullPosition.split(" ")[4];
+        score = parseInt(castleParams.split("-")[1]);
+        movedRookL = Boolean(parseInt(castleParams[0]));
+        movedRookR = Boolean(parseInt(castleParams[1]));
+        movedKing = false;
+    }
+    else document.querySelector("#wait-cover").style.display = "block";
+  }
+
 
   client
   .channel('games')
@@ -1064,30 +1025,10 @@ function setBodyColor(){
       event: 'UPDATE',
       schema: 'public',
       table: 'chess_four',
-      filter: `game_name=eq.${gameName}`,
+      filter: `game_name=eq.${new URLSearchParams(document.location.search).get("id")}`,
     },
     (payload) => {
-        created = payload.new.started;
-        if(created){
-            turn = payload.new.turn;
-            document.querySelector("body").style.backgroundColor = setBodyColor();
-            fullPosition = payload.new.board;
-            setPosition(fullPosition.split(" ")[0]);
-            checkmate();
-            resetLegalMoves();
-            let castleParams;
-            if(color === "red")castleParams = fullPosition.split(" ")[1];
-            else if(color === "blue")castleParams = fullPosition.split(" ")[2];
-            else if(color === "yellow")castleParams = fullPosition.split(" ")[3];
-            else if(color === "green")castleParams = fullPosition.split(" ")[4];
-            score = parseInt(castleParams.split("-")[1]);
-            movedRookL = Boolean(parseInt(castleParams[0]));
-            movedRookR = Boolean(parseInt(castleParams[1]));
-            movedKing = false;
-        }
-        else{
-
-        }
+        onUpdateAndReload(payload.new);
     }
   )
   .subscribe()

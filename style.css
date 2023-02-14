@@ -88,6 +88,7 @@ div:not(#game) .green{
     left:0;
     width:100%;
     height: 100%;
+    z-index: 1;
 }
 .cover{
     position:fixed;
@@ -121,4 +122,131 @@ div:not(#game) .green{
 #gameID{
     width:100%;
     height: 2ch;
+}
+#game-info{
+    position:absolute;
+    width: calc(var(--square-size) * 14);
+    height: calc(var(--square-size) * 14);
+}
+#board-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--square-size) / 3);
+    height: calc(var(--square-size) / 3);
+    border-radius: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+.player-info{
+    position: absolute;
+    width: calc(var(--square-size) * 2.75);
+    height: var(--square-size);
+    border-radius:5%;
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+}
+#red-stats{
+    background-color:#bf3b43;
+}
+#game-info.red-player #red-stats{
+    bottom:var(--square-size);
+    right:0;
+}
+#game-info.red-player #blue-stats{
+    bottom:var(--square-size);
+    left:0;
+}
+#game-info.red-player #yellow-stats{
+    top:var(--square-size);
+    left:0;
+}
+#game-info.red-player #green-stats{
+    top:var(--square-size);
+    right:0;
+}
+
+#blue-stats{
+    background-color:#4185bf;
+}
+#game-info.blue-player #red-stats{
+    top:var(--square-size);
+    right:0;
+}
+#game-info.blue-player #blue-stats{
+    bottom:var(--square-size);
+    right:0;
+}
+#game-info.blue-player #yellow-stats{
+    bottom:var(--square-size);
+    left:0;
+}
+#game-info.blue-player #green-stats{
+    top:var(--square-size);
+    left:0;
+}
+
+#yellow-stats{
+    background-color:#c09526;
+}
+#game-info.yellow-player #red-stats{
+    top:var(--square-size);
+    left:0;
+}
+#game-info.yellow-player #blue-stats{
+    top:var(--square-size);
+    right:0;
+}
+#game-info.yellow-player #yellow-stats{
+    bottom:var(--square-size);
+    right:0;
+}
+#game-info.yellow-player #green-stats{
+    bottom:var(--square-size);
+    left:0;
+}
+
+#green-stats{
+    background-color:#4e9161;
+}
+#game-info.green-player #red-stats{
+    bottom:var(--square-size);
+    left:0;
+}
+#game-info.green-player #blue-stats{
+    top:var(--square-size);
+    left:0;
+}
+#game-info.green-player #yellow-stats{
+    top:var(--square-size);
+    right:0;
+}
+#game-info.green-player #green-stats{
+    bottom:var(--square-size);
+    right:0;
+}
+
+.time-left{
+    background-color: white;
+    width: 50%;
+    height: 80%;
+    border-radius: 5%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    margin-right:4%;
+    font-size: calc(var(--square-size) / 2);
+}
+.score-div{
+    font-weight: 900;
+    font-size: calc(var(--square-size) / 2);
+    width: 46%;
+    color:white;
+    text-align: center;
+}
+.player-info.active{
+    opacity: 1;
 }
